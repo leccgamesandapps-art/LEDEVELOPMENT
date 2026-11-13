@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>LEDEVELOPMENT | Official Portal</title>
+  <meta name="description" content="LEDEVELOPMENT — Safe, legitimate software development, websites, Android projects, and more. Powered by GitHub & Vercel." />
+  <meta name="theme-color" content="#0a0a0f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #05050a;
+      --bg-elevated: #0c0c14;
+      --surface: rgba(18, 18, 28, 0.75);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.18);
+      --text: #f0f0f5;
+      --text-muted: #9a9ab0;
+      --accent: #7c5cff;
+      --accent-glow: rgba(124, 92, 255, 0.45);
+      --accent-2: #00e5c0;
+      --accent-2-glow: rgba(0, 229, 192, 0.35);
+      --danger: #ff4d6d;
+      --radius: 20px;
+      --radius-sm: 12px;
+      --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55);
+      --transition: 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Background effects */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black, transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatGlow 18s ease-in-out infinite alternate;
+    }
+
+    .bg-glow.one {
+      top: -15%;
+      left: -10%;
+      background: var(--accent);
+    }
+
+    .bg-glow.two {
+      bottom: -20%;
+      right: -15%;
+      background: var(--accent-2);
+      animation-delay: -6s;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, 30px) scale(1.15); }
+    }
+
+    /* Particles */
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      animation: rise linear infinite;
+    }
+
+    @keyframes rise {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      10% { opacity: 1; }
+      90% { opacity: 0.6; }
+      100% {
+        transform: translateY(-20vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* Main layout */
+    #main {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    /* Brand */
+    .brand {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.9s var(--transition) both;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(124, 92, 255, 0.12);
+      border: 1px solid rgba(124, 92, 255, 0.3);
+      color: #c4b5ff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+
+    .brand-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent-2);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent-2);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .brand h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.4rem, 8vw, 4.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #ffffff 0%, #c4b5ff 45%, #00e5c0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .brand p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      font-weight: 400;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    /* Context A Card */
+    .context-a {
+      width: 100%;
+      max-width: 540px;
+      background: var(--surface);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border);
+      border-radius: calc(var(--radius) + 4px);
+      padding: 2rem 1.75rem;
+      box-shadow: var(--shadow);
+      animation: fadeUp 0.9s 0.15s var(--transition) both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .context-a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124, 92, 255, 0.5), transparent);
+    }
+
+    .welcome-label {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .welcome-label svg {
+      width: 20px;
+      height: 20px;
+      color: var(--accent-2);
+      flex-shrink: 0;
+    }
+
+    /* Descriptions */
+    .desc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .desc-item {
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+      padding: 0.85rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      animation: fadeUp 0.7s both;
+    }
+
+    .desc-item:nth-child(1) { animation-delay: 0.3s; }
+    .desc-item:nth-child(2) { animation-delay: 0.4s; }
+    .desc-item:nth-child(3) { animation-delay: 0.5s; }
+
+    .desc-item:hover {
+      background: rgba(124, 92, 255, 0.08);
+      border-color: rgba(124, 92, 255, 0.25);
+      transform: translateX(4px);
+    }
+
+    .desc-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+
+    .desc-item:nth-child(1) .desc-icon {
+      background: rgba(0, 229, 192, 0.15);
+      color: var(--accent-2);
+    }
+    .desc-item:nth-child(2) .desc-icon {
+      background: rgba(124, 92, 255, 0.15);
+      color: #c4b5ff;
+    }
+    .desc-item:nth-child(3) .desc-icon {
+      background: rgba(255, 180, 80, 0.15);
+      color: #ffb450;
+    }
+
+    .desc-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .desc-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.95rem 1.5rem;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #9b7aff);
+      color: #fff;
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px var(--accent-glow);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent, rgba(255,255,255,0.15));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .btn-primary:hover::after {
+      opacity: 1;
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Footer note */
+    .footer-note {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      animation: fadeUp 0.9s 0.6s var(--transition) both;
+    }
+
+    .footer-note a {
+      color: #c4b5ff;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-note a:hover {
+      color: #fff;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (min-width: 480px) {
+      .context-a {
+        padding: 2.25rem 2rem;
+      }
+      .btn-group {
+        flex-direction: row;
+      }
+      .btn {
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .brand h1 {
+        font-size: 2.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-glow one"></div>
+  <div class="bg-glow two"></div>
+  <div id="particles"></div>
+
+  <main id="main">
+    <div class="brand">
+      <div class="brand-badge">Official Portal</div>
+      <h1>LEDEVELOPMENT</h1>
+      <p>Building safe, legitimate, and modern digital experiences.</p>
+    </div>
+
+    <section class="context-a" aria-labelledby="welcome-label">
+      <div class="welcome-label" id="welcome-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Welcome to our website
+      </div>
+
+      <ul class="desc-list">
+        <li class="desc-item">
+          <div class="desc-icon">🛡️</div>
+          <div class="desc-text">
+            <strong>Safe Developments & Projects</strong><br />
+            We prioritize security, privacy, and responsible software practices in every project we ship.
+          </div>
+        </li>
+        <li class="desc-item">
+          <div class="desc-icon">✅</div>
+          <div class="desc-text">
+            <strong>Legitimate Developments & Projects</strong><br />
+            All work is original, properly licensed, and built with transparency and integrity.
+          </div>
+        </li>
+        <li class="desc-item">
+          <div class="desc-icon">🚀</div>
+          <div class="desc-text">
+            <strong>GitHub • Vercel • This Website</strong><br />
+            Open source on GitHub, deployed on Vercel, and continuously improved right here.
+          </div>
+        </li>
+      </ul>
+
+      <div class="btn-group">
+        <a href="home.html#home" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Home Page
+        </a>
+        <a href="https://github.com/leccgamesandapps-art" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.418-1.305.76-1.605-2.665-.305-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.233 1.91 1.233 3.22 0 4.61-2.805 5.62-5.475 5.92.43.37.81 1.1.81 2.22 0 1.605-.015 2.9-.015 3.3 0 .32.216.694.825.576C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </section>
+
+    <p class="footer-note">
+      LEDEVELOPMENT • Powered by <a href="https://vercel.com" target="_blank" rel="noopener">Vercel</a>
+    </p>
+  </main>
+
+  <script>
+    // Lightweight particle system
+    (function () {
+      const container = document.getElementById('particles');
+      const count = Math.min(28, Math.floor(window.innerWidth / 25));
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (8 + Math.random() * 14) + 's';
+        p.style.animationDelay = (Math.random() * 10) + 's';
+        p.style.opacity = 0.15 + Math.random() * 0.4;
+        p.style.width = p.style.height = (1.5 + Math.random() * 2.5) + 'px';
+        container.appendChild(p);
+      }
+    })();
+  </script>
+</body>
+</html>
